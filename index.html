@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>David San Francisco — Painting</title>
-<meta name="description" content="David San Francisco, painter. Available works, exhibitions, dossier and contact.">
+<title>David San Francisco — Pintura</title>
+<meta name="description" content="David San Francisco, pintor. Obra disponible, exposiciones, dossier y contacto.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -259,8 +259,8 @@
   }
   .piece:focus-visible{outline:2px solid var(--ultramarine); outline-offset:4px;}
 
-  /* vertical/square piece: the piece centers itself; the info anchors to
-     its right, at the bottom, without shifting that centering */
+  /* obra vertical/cuadrada: la obra se centra por sí misma; la ficha se
+     ancla a su derecha, abajo, sin desplazar ese centrado */
   .piece.orient-vertical{
     position:relative;
     display:block;
@@ -276,7 +276,7 @@
     padding:0;
   }
 
-  /* horizontal piece: the piece stays on top and the info below it, larger */
+  /* obra horizontal: la obra queda arriba y la ficha debajo, con más tamaño */
   .piece.orient-horizontal{
     max-width:1320px;
   }
@@ -841,16 +841,16 @@
 <header>
   <nav>
     <a href="#inicio" class="brand">David San Francisco</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#obra">Works</a></li>
-      <li><a href="archivo-en.html">Archive</a></li>
-      <li><a href="#sobre-mi">About</a></li>
+      <li><a href="#obra">Obra</a></li>
+      <li><a href="archivo.html">Archivo</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
       <li><a href="#dossier">Dossier</a></li>
-      <li><a href="#contacto">Contact</a></li>
-      <li><a href="marina-sole-portfolio.html" class="lang-switch">ES</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="index-en.html" class="lang-switch">EN</a></li>
     </ul>
   </nav>
 </header>
@@ -860,14 +860,14 @@
   <!-- HERO -->
   <section class="hero" id="inicio">
     <div class="hero-stage" id="heroStage"></div>
-    <a href="#obra" class="hero-scroll-cue"><span class="bar"></span>View work</a>
+    <a href="#obra" class="hero-scroll-cue"><span class="bar"></span>Ver obra</a>
   </section>
 
   <!-- OBRA DISPONIBLE -->
   <section class="section" id="obra">
     <div class="container">
       <div class="section-head">
-        <h2>Selected Works</h2>
+        <h2>Obra seleccionada</h2>
         <span class="label" id="pieceCount"></span>
       </div>
     </div>
@@ -875,7 +875,7 @@
       <div class="gallery" id="gallery"></div>
     </div>
     <div class="container archive-link-wrap">
-      <a href="archivo-en.html" class="archive-link">View archive <span aria-hidden="true">→</span></a>
+      <a href="archivo.html" class="archive-link">Ver archivo <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -883,22 +883,21 @@
   <section class="section" id="sobre-mi">
     <div class="container">
       <div class="section-head">
-        <h2>About</h2>
-        <span class="label">Biography</span>
+        <h2>Sobre mí</h2>
+        <span class="label">Biografía</span>
       </div>
       <div class="about-grid">
         <div class="about-photo">
           <img src="images/profile.jpg" alt="David San Francisco">
         </div>
         <div class="about-copy">
-          <p>My artistic practice focuses on producing works capable of generating knowledge that adapts to the individual experience of each viewer. These are images in which I deliberately avoid assigning a predetermined meaning, allowing each person to construct their own interpretation through memory, perception, and lived experience. In this way, the work evolves alongside the individual, remaining open and mutable over time. I understand painting as a language that enables a specific form of communication. When an artwork maintains a sufficient degree of ambiguity, it can establish a meaningful bond with the viewer and operate as an active participant in an ongoing dialogue rather than as a closed statement.</p>
-          <p>Silver and copper function as directional elements within the image, encouraging each work to interact with the surrounding space. These materials are combined with graphic marks reminiscent of writing, designed to stimulate curiosity and invite the viewer to enter the pictorial field. The compositions are structured on surfaces conceived as walls, revealing multiple strata that introduce varying depths, while areas of exposed, unworked canvas confront these constructed surfaces directly. This tension generates a visual interplay in which no single element dominates, granting the viewer greater freedom in navigating the image.</p>
-          <p>The golden ratio formats and compositions that characterize my work act as visual connectors, fostering relationships between the viewer, the artwork, and the space in which it exists. Through this resonance with its environment, the work opens up new fields of interpretation and spatial reading.</p>
-          <p>I propose a slow, contemplative artistic experience in which the level of the viewer’s engagement determines the meaning of the image. It is through this active relationship between the artwork and the individual that significance emerges.</p>
+          <p>Como artista e investigador, mi interés se centra en generar obras que sean capaces de producir un conocimiento adaptado a las experiencias del espectador. Son imágenes en las que evito otorgar un significado previo, donde cada persona propone su sentido a través de su experiencia y su memoria, y que evoluciona a la vez que lo hace el individuo.</p>
+          <p>Entiendo la pintura como un lenguaje y la obra como un participante activo en la comunicación. Esta premisa me ha llevado a desarrollar obras que actúen como nexo entre el público y el paisaje social del que participa haciendo su capacidad narrativa se actualice con cada espectador, mutando en base a sus secuencias de imágenes previas.</p>
+          <p>Propongo una experiencia artística pausada, en la que el grado de implicación del espectador determinará el sentido de la imagen, haciendo que la relación activa entre la obra y el individuo genere su significado.</p>
           <ul class="about-facts">
-            <li><span class="label">Born in</span><span>Valladolid, Spain</span></li>
-            <li><span class="label">Lives and works in</span><span>Madrid</span></li>
-            <li><span class="label">Education</span><span>Fine Arts, PHD, Complutense University of Madrid</span></li>
+            <li><span class="label">Nacido en</span><span>Valladolid, España</span></li>
+            <li><span class="label">Reside y trabaja en</span><span>Madrid</span></li>
+            <li><span class="label">Formación</span><span>Doctor en Bellas Artes, Universidad Complutense de Madrid</span></li>
           </ul>
         </div>
       </div>
@@ -906,14 +905,16 @@
   </section>
 
   <!-- EXPOSICIONES -->
-  <section class="section" id="exposiciones">
-    <div class="container">
-      <div class="section-head">
-        <h2>Exhibitions</h2>
-        <span class="label">Exhibition history</span>
-      </div>
-      <div class="timeline">
-        <div class="tl-row">
+<section class="section" id="exposiciones">
+  <div class="container">
+    <div class="section-head">
+      <h2>Exposiciones</h2>
+      <span class="label">Trayectoria</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-row">
         <span class="tl-year">2024</span>
         <div class="tl-main">
           <h3>Abstract Today</h3>
@@ -1051,8 +1052,8 @@
     </div>
 
     <div class="section-head" style="margin-top:100px; margin-bottom:0;">
-      <h2>Competitions and Awards</h2>
-      <span class="label">Achievements</span>
+      <h2>Premios y concursos</h2>
+      <span class="label">Selección y reconocimiento</span>
     </div>
 
     <div class="timeline">
@@ -1102,19 +1103,19 @@
     <div class="container">
       <div class="section-head">
         <h2>Dossier</h2>
-        <span class="label">PDF — 24 pages</span>
+        <span class="label">PDF — 24 páginas</span>
       </div>
       <div class="dossier-grid">
         <div class="dossier-copy">
-          <p>A complete dossier with works, career history, critical texts and sale conditions, designed for galleries, curators and collectors.</p>
-          <a class="btn primary" href="dossier-david-sanfrancisco.pdf" download>Download dossier (PDF)</a>
+          <p>Un dossier completo con obra, trayectoria, textos crítica y condiciones de venta, pensado para galerías, comisarios y coleccionistas.</p>
+          <a class="btn primary" href="dossier-david-sanfrancisco.pdf" download>Descargar dossier (PDF)</a>
         </div>
         <div class="dossier-card">
-          <span class="label">Contents</span>
+          <span class="label">Contenido</span>
           <ul>
-            <li>Biography and career history</li>
-            <li>Available works with technical sheets</li>
-            <li>Solo and group exhibitions</li>
+            <li>Biografía y trayectoria</li>
+            <li>Obra disponible con fichas técnicas</li>
+            <li>Exposiciones individuales y colectivas</li>
           </ul>
         </div>
       </div>
@@ -1125,32 +1126,32 @@
   <section class="section" id="newsletter">
     <div class="container">
       <div class="section-head">
-        <h2>New Works</h2>
-        <span class="label">Subscribe</span>
+        <h2>Nuevas obras</h2>
+        <span class="label">Suscripción</span>
       </div>
       <div class="newsletter-box">
-        <p>Receive monthly notes from the studio: new work, process and upcoming shows. No spam, one email a month.</p>
+        <p>Recibe actualizaciones mensuales desde el estudio: obra nueva, procesos y próximas exposiciones — sin spam, un email al mes.</p>
         <div>
           <form id="newsletterForm" class="newsletter-form" method="POST" target="brevoFrame" novalidate>
             <div class="newsletter-field">
-              <input type="email" id="newsletterEmail" name="EMAIL" placeholder="your@email.com" aria-label="Your email address" autocomplete="email" required>
-              <button type="submit" class="btn primary" id="newsletterSubmit">Subscribe</button>
+              <input type="email" id="newsletterEmail" name="EMAIL" placeholder="tu@email.com" aria-label="Tu dirección de email" autocomplete="email" required>
+              <button type="submit" class="btn primary" id="newsletterSubmit">Suscribirme</button>
             </div>
             <label class="newsletter-optin">
               <input type="checkbox" id="newsletterOptIn" name="OPT_IN" value="1">
-              <span>I accept the terms and agree to receive your newsletters.</span>
+              <span>Acepto las condiciones y recibir tus newsletters.</span>
             </label>
-            <!-- Invisible Google verification: it shows nothing unless a submission looks suspicious. -->
+            <!-- Verificación invisible de Google: no muestra nada salvo que detecte un envío sospechoso. -->
             <div class="newsletter-captcha" id="newsletterCaptcha"></div>
-            <!-- Brevo's anti-spam trap: never delete it and never fill it in. -->
+            <!-- Trampa antispam de Brevo: no la borres y no la rellenes nunca. -->
             <input class="newsletter-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="locale" value="es">
           </form>
           <p class="newsletter-note" id="newsletterNote" role="status" aria-live="polite"></p>
           <div class="newsletter-legal">
-            <p>You can unsubscribe whenever you like using the link included in every newsletter.</p>
-            <p>We use Brevo as our marketing platform. By submitting this form you agree that the personal data you provided will be transferred to Brevo for processing, in accordance with <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank" rel="nofollow noopener">Brevo's Privacy Policy</a>.</p>
-            <p>This site is protected by reCAPTCHA; Google's <a href="https://policies.google.com/privacy" target="_blank" rel="nofollow noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="nofollow noopener">Terms of Service</a> apply.</p>
+            <p>Puedes cancelar tu suscripción cuando quieras mediante el enlace de nuestra newsletter.</p>
+            <p>Usamos Brevo como plataforma de marketing. Al enviar este formulario, aceptas que los datos personales que proporcionaste se transferirán a Brevo para su procesamiento, de acuerdo con <a href="https://www.brevo.com/es/legal/privacypolicy/" target="_blank" rel="nofollow noopener">la Política de privacidad de Brevo</a>.</p>
+            <p>Este sitio está protegido por reCAPTCHA; se aplican la <a href="https://policies.google.com/privacy" target="_blank" rel="nofollow noopener">Política de privacidad</a> y los <a href="https://policies.google.com/terms" target="_blank" rel="nofollow noopener">Términos del servicio</a> de Google.</p>
           </div>
         </div>
       </div>
@@ -1161,22 +1162,22 @@
   <section class="section" id="contacto">
     <div class="container">
       <div class="section-head">
-        <h2>Contact</h2>
-        <span class="label">Studio & representation</span>
+        <h2>Contacto</h2>
+        <span class="label">Consultas y encargos</span>
       </div>
       <div class="contact-grid">
         <div class="contact-info">
-          <h3>Inquiries about works, commissions or representation</h3>
-          <p style="color:var(--ink-soft); max-width:40ch;">Response within 2–3 business days. For studio visits, please write in advance.</p>
+          <h3>Consultas sobre obra, encargos o representación</h3>
+          <p style="color:var(--ink-soft); max-width:40ch;">Respuesta en un plazo de 2–3 días laborables. Para visitas al estudio, escribir con antelación.</p>
           <ul class="contact-list">
             <li><span class="label">Email</span><br><a href="mailto:dsanfrancisco.art@gmail.com">dsanfrancisco.art@gmail.com</a></li>
-            <!-- <li><span class="label">Studio</span><br><a href="#">Madrid, Spain — visits by appointment</a></li> -->
-            <li><span class="label">Instagram</span><br><a href="https://www.instagram.com/david.sanfrancisco.art/" target="_blank" rel="noopener">@davidsanfrancisco.art</a></li>
+            <!-- <li><span class="label">Estudio</span><br><a href="#">Madrid, España — visitas con cita previa</a></li> -->
+            <li><span class="label">Instagram</span><br><a href="https://www.instagram.com/david.sanfrancisco.art/" target="_blank" rel="noopener">@davidsanfrancisco.arte</a></li>
           </ul>
         </div>
         <form id="contactForm">
           <div class="field">
-            <label for="nombre">Name</label>
+            <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" required>
           </div>
           <div class="field">
@@ -1184,15 +1185,15 @@
             <input type="email" id="email" name="email" required>
           </div>
           <div class="field">
-            <label for="asunto">Subject</label>
-            <input type="text" id="asunto" name="asunto" placeholder="E.g. Inquiry about size and technique">
+            <label for="asunto">Asunto</label>
+            <input type="text" id="asunto" name="asunto" placeholder="Ej. Consulta sobre disponibilidad">
           </div>
           <div class="field">
-            <label for="mensaje">Message</label>
+            <label for="mensaje">Mensaje</label>
             <textarea id="mensaje" name="mensaje" required></textarea>
           </div>
-          <button type="submit" class="btn primary">Send message</button>
-          <p class="form-note">When you submit, your email client will open with the message already drafted, ready to send.</p>
+          <button type="submit" class="btn primary">Enviar mensaje</button>
+          <p class="form-note">Al enviar, se abrirá tu gestor de correo con el mensaje ya redactado, listo para confirmar el envío.</p>
         </form>
       </div>
     </div>
@@ -1202,7 +1203,7 @@
 
 <footer>
   <div class="container footer-row">
-    <span class="label">© 2025 David San Francisco — All rights reserved</span>
+    <span class="label">© 2025 David San Francisco — Todos los derechos reservados</span>
     <div class="socials">
       <a href="https://www.instagram.com/david.sanfrancisco.art/" target="_blank" rel="noopener">Instagram</a>
       <a href="mailto:dsanfrancisco.art@gmail.com">Email</a>
@@ -1211,8 +1212,8 @@
 </footer>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Artwork detail">
-  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Detalle de la obra">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">✕</button>
   <div class="lightbox-inner" id="lightboxInner">
     <div class="lightbox-canvas" id="lightboxCanvas">
       <div class="lightbox-media" id="lightboxMedia">
@@ -1224,20 +1225,20 @@
       <span class="label">David San Francisco</span>
       <h3 id="lbTitle" style="font-size:28px;"></h3>
       <p class="piece-meta" id="lbMeta" style="font-size:12px;"></p>
-      <p class="lb-guarantee">Includes signed certificate of authenticity · Insured door-to-door shipping, packaging included</p>
-      <p style="color:var(--ink-soft); font-size:15px;">For more information about this piece, shipping conditions or high-resolution images, get in touch directly.</p>
-      <a class="btn" href="#contacto" id="lbContact">Inquire about this piece</a>
+      <p class="lb-guarantee">Incluye certificado de autenticidad firmado · Envío asegurado a domicilio, embalaje incluido</p>
+      <p style="color:var(--ink-soft); font-size:15px;">Para más información sobre esta obra, condiciones de envío o solicitar imágenes en alta resolución, contacta directamente.</p>
+      <a class="btn" href="#contacto" id="lbContact">Consultar sobre esta obra</a>
     </div>
   </div>
 </div>
 
-<!-- Invisible target for the newsletter submission: the visitor never leaves the page. -->
-<iframe class="newsletter-frame" id="brevoFrame" name="brevoFrame" title="Subscription submission" aria-hidden="true" tabindex="-1"></iframe>
+<!-- Destino invisible del formulario de suscripción: el visitante no sale de la página al enviarlo. -->
+<iframe class="newsletter-frame" id="brevoFrame" name="brevoFrame" title="Envío de la suscripción" aria-hidden="true" tabindex="-1"></iframe>
 
 <script>
-  // Single source of truth for the works: edit only here to add, remove
-  // or update a piece -> the gallery card, lightbox and magnifier are
-  // generated automatically from this data.
+  // Lista unica de obras: cambia solo aqui para anadir, quitar o editar
+  // una pieza -> la tarjeta de la galeria, el lightbox y la lupa se
+  // generan solos a partir de estos datos.
   const WORKS = [
     { title:'I Will Never be as tall as the moon',  meta:'Oleo, acrílico y resinas sintéticas sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',     details:'', img:'images/work-4-full.jpg', thumb:'images/work-4-thumb.jpg' },
     { title:'What happens in front of your eyes and behind your back',    meta:'Oleo, acrílico, resinas sintéticas y pan de cobre sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',                                       details:'', img:'images/work-3-full.jpg', thumb:'images/work-3-thumb.jpg' },
@@ -1251,14 +1252,14 @@
     { title:'Sin Título No38',     meta:'Oleo, acrílico, resinas sintéticas, ceras, pan de plata y pan de cobre sobre lienzo \u00b7 160 \u00d7 100 cm \u00b7 2025',       details:'', img:'images/work-21-full.jpg', thumb:'images/work-21-thumb.jpg' },
   ];
 
-  // ---- Hero: sequence of the 3 works, with fade-to-white between each one.
-  // The indices are positions within WORKS, in the order of the 3 images
-  // provided: I Will Never..., Nothing Stays Still Forever, What happens...
+  // ---- Hero: secuencia de las 3 obras, con fundido a blanco entre cada una.
+  // Los indices son posiciones dentro de WORKS, en el orden de las 3
+  // imagenes proporcionadas: I Will Never..., Nothing stays..., What happens...
   const HERO_SEQUENCE = [0, 2, 1];
-  const HERO_INITIAL_DELAY = 1200;   // blank screen before the first piece
-  const HERO_FADE_IN = 2500;         // duration of the fade-in
-  const HERO_HOLD = 5000;            // time the piece stays fully visible
-  const HERO_FADE_OUT = 3000;        // duration of the fade back to white
+  const HERO_INITIAL_DELAY = 1200;   // pantalla en blanco antes de la primera obra
+  const HERO_FADE_IN = 2500;         // duracion del fundido de aparicion
+  const HERO_HOLD = 5000;            // tiempo que la obra permanece visible
+  const HERO_FADE_OUT = 3000;        // duracion del fundido de vuelta a blanco
 
   function initHero(){
     const stage = document.getElementById('heroStage');
@@ -1267,7 +1268,7 @@
       const a = document.createElement('a');
       a.href = '#obra';
       a.className = 'hero-slide';
-      a.setAttribute('aria-label', 'View the details for "' + w.title + '"');
+      a.setAttribute('aria-label', 'Ver ficha de la obra "' + w.title + '"');
       a.innerHTML = '<img src="' + w.img + '" alt="' + w.title + '">';
       a.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1300,10 +1301,10 @@
     setTimeout(cycle, HERO_INITIAL_DELAY);
   }
 
-  // ---- Available Works: builds each piece card and the piece counter ----
+  // ---- Obra disponible: genera la tarjeta de cada pieza y el contador ----
   const gallery = document.getElementById('gallery');
   const pieceCount = document.getElementById('pieceCount');
-  pieceCount.textContent = WORKS.length + (WORKS.length === 1 ? ' piece' : ' pieces');
+  pieceCount.textContent = WORKS.length + (WORKS.length === 1 ? ' pieza' : ' piezas');
 
   WORKS.forEach((w, i) => {
     const btn = document.createElement('button');
@@ -1313,13 +1314,13 @@
       '<div class="piece-info">' +
         '<span class="piece-title">' + w.title + '</span>' +
         '<span class="piece-meta">' + w.meta + '</span>' +
-        '<span class="status disponible"><span class="sq"></span>Inquire</span>' +
+        '<span class="status disponible"><span class="sq"></span>Consultar</span>' +
       '</div>';
     btn.addEventListener('click', () => openLightbox(i));
     gallery.appendChild(btn);
 
-    // Orientation: horizontal -> piece on top, info below (wider).
-    // Vertical/square -> piece on the left, info to the right, at the bottom.
+    // Orientacion: horizontal -> obra arriba, ficha debajo (mas ancho).
+    // Vertical/cuadrada -> obra a la izquierda, ficha a la derecha, abajo.
     const thumbImg = btn.querySelector('.canvas img');
     const applyPieceOrientation = () => {
       const ratio = thumbImg.naturalWidth / thumbImg.naturalHeight;
@@ -1354,8 +1355,8 @@
   const lbMeta = document.getElementById('lbMeta');
   const lbContact = document.getElementById('lbContact');
 
-  // Magnifier: creates a circular lens that follows the cursor showing
-  // the zoomed-in image, to inspect the painting's detail.
+  // Lupa / zoom: crea una lente circular que sigue el cursor mostrando
+  // la imagen ampliada, para poder inspeccionar el detalle del cuadro.
   function initMagnifier(img, zoom){
     const old = lightboxMedia.querySelector('.img-magnifier-glass');
     if(old) old.remove();
@@ -1407,7 +1408,7 @@
     lbTitle.textContent = p.title;
     lbMeta.textContent = p.meta;
     if(p.details){
-      lbDetails.innerHTML = '<span class="label">Artwork details</span>' + p.details;
+      lbDetails.innerHTML = '<span class="label">Detalles de la obra</span>' + p.details;
     } else {
       lbDetails.innerHTML = '';
     }
@@ -1415,8 +1416,8 @@
     lightbox.classList.add('open');
     document.getElementById('lightboxClose').focus();
 
-    // Orientation: vertical/square -> photo left, details right.
-    // Horizontal -> photo on top, details below.
+    // Orientacion: vertical/cuadrada -> foto a la izquierda, ficha a la
+    // derecha. Horizontal -> foto arriba, ficha debajo.
     const applyOrientation = () => {
       const ratio = lbImg.naturalWidth / lbImg.naturalHeight;
       lightboxInner.classList.toggle('orient-horizontal', ratio > 1.05);
@@ -1436,17 +1437,17 @@
   lbContact.addEventListener('click', () => {
     const asunto = document.getElementById('asunto');
     if(asunto && lbTitle.textContent){
-      asunto.value = 'Inquiry about "' + lbTitle.textContent + '"';
+      asunto.value = 'Consulta sobre "' + lbTitle.textContent + '"';
     }
     closeLightbox();
   });
 
   initHero();
 
-  // About: the text occupies the same width as the photograph. Since
-  // the photo is horizontal and its width depends on its actual
-  // proportion, it's measured once loaded (and on every resize) and
-  // that same width is applied to the text block.
+  // Sobre mí: el texto ocupa el mismo ancho que la fotografía. Como la
+  // foto es horizontal y su ancho depende de su proporción real, se
+  // mide una vez cargada (y en cada resize) y se aplica ese mismo
+  // ancho al bloque de texto.
   const aboutPhotoImg = document.querySelector('.about-photo img');
   const aboutCopy = document.querySelector('.about-copy');
   if(aboutPhotoImg && aboutCopy){
@@ -1463,9 +1464,9 @@
     e.preventDefault();
     const nombre = document.getElementById('nombre').value;
     const email = document.getElementById('email').value;
-    const asunto = document.getElementById('asunto').value || 'Inquiry from the website';
+    const asunto = document.getElementById('asunto').value || 'Consulta desde la web';
     const mensaje = document.getElementById('mensaje').value;
-    const body = `Name: ${nombre}\nEmail: ${email}\n\n${mensaje}`;
+    const body = `Nombre: ${nombre}\nEmail: ${email}\n\n${mensaje}`;
     window.location.href = `mailto:dsanfrancisco.art@gmail.com?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(body)}`;
   });
 
@@ -1491,6 +1492,8 @@
     let captchaId = null;
     let sending   = false;
     let timer     = null;
+    const enLocal = location.protocol === 'file:' ||
+                    /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
 
     form.action = BREVO_FORM_ACTION;
 
@@ -1515,11 +1518,11 @@
         size: 'invisible',
         callback: send,
         'expired-callback': function(){ if(captchaId !== null) grecaptcha.reset(captchaId); },
-        'error-callback': function(){ idle(); say('We couldn\'t validate your subscription. Please try again in a moment.', 'error'); }
+        'error-callback': function(){ idle(); say('No hemos podido completar la verificación de seguridad. Vuelve a intentarlo en un momento.', 'error'); }
       });
     };
     var rc = document.createElement('script');
-    rc.src = 'https://www.google.com/recaptcha/api.js?onload=onNewsletterCaptcha&render=explicit&hl=en';
+    rc.src = 'https://www.google.com/recaptcha/api.js?onload=onNewsletterCaptcha&render=explicit&hl=es';
     rc.async = true;
     rc.defer = true;
     document.head.appendChild(rc);
@@ -1528,24 +1531,31 @@
       e.preventDefault();               // primero validamos y pedimos la verificacion
       if(sending) return;
       if(!input.value || !input.checkValidity()){
-        say('Please enter a valid email address.', 'error');
+        say('Introduce una dirección de correo válida.', 'error');
         input.focus();
         return;
       }
       if(!optIn.checked){
-        say('Please tick the acceptance box to subscribe.', 'error');
+        say('Marca la casilla de aceptación para poder suscribirte.', 'error');
         optIn.focus();
+        return;
+      }
+    // En local (Live Server / file://) la verificacion de Google no funciona:
+    // la clave de Brevo no admite 127.0.0.1 como dominio. Se avisa en vez de
+    // enviar, para no ensuciar la lista de contactos con pruebas.
+    if(enLocal){
+        say('En local no se puede completar el envío: la clave de Google no admite 127.0.0.1. Pruébalo en la web publicada.', 'error');
         return;
       }
       sending = true;
       button.disabled = true;
-      say('Sending…');
+      say('Enviando…');
       clearTimeout(timer);
       timer = setTimeout(function(){
         if(!sending) return;
         idle();
-        say('This is taking too long. Please try again.', 'error');
-      }, 25000);
+        say('El envío está tardando demasiado. Vuelve a intentarlo, por favor.', 'error');
+      }, 40000);
       if(captchaId !== null){ grecaptcha.execute(captchaId); }  // al terminar llama a send()
       else { send(); }
     });
@@ -1555,7 +1565,7 @@
       idle();
       form.reset();
       if(captchaId !== null) grecaptcha.reset(captchaId);
-      say('Thank you — your subscription has been sent. Check your inbox in case you need to confirm it.', 'ok');
+      say('Gracias — tu suscripción se ha enviado. Revisa tu correo por si necesitas confirmarla.', 'ok');
     });
   })();
 </script>
