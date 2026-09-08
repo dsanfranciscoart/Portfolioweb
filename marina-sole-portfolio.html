@@ -416,7 +416,7 @@
     .about-photo img{height:320px;}
   }
 
-  /* ---------- NEWSLETTER (conectada a Brevo) ---------- */
+  /* ---------- NEWSLETTER (Brevo) ---------- */
   #newsletter{background:var(--ink);}
   #newsletter .section-head{border-bottom-color:rgba(255,255,255,0.2);}
   #newsletter .section-head h2{color:var(--stone);}
@@ -425,7 +425,7 @@
     display:grid;
     grid-template-columns:1.2fr 1fr;
     gap:48px;
-    align-items:center;
+    align-items:start;
   }
   .newsletter-box > p{
     font-size:17px;
@@ -436,8 +436,8 @@
     position:relative;
     display:flex;
     flex-direction:column;
-    align-items:flex-start;
-    gap:22px;
+    align-items:stretch;
+    gap:20px;
   }
   .newsletter-field{
     display:flex;
@@ -464,6 +464,34 @@
   .newsletter-form .btn.primary{background:var(--ultramarine); border-color:var(--ultramarine); color:var(--white);}
   .newsletter-form .btn.primary:hover{background:var(--ultramarine-deep); border-color:var(--ultramarine-deep);}
   .newsletter-form .btn[disabled]{opacity:0.45; cursor:default;}
+
+  /* Casilla de consentimiento, dibujada con la paleta de la web */
+  .newsletter-optin{
+    display:flex;
+    align-items:flex-start;
+    gap:11px;
+    font-size:14px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.72);
+    cursor:pointer;
+  }
+  .newsletter-optin input{
+    appearance:none;
+    -webkit-appearance:none;
+    flex:none;
+    width:16px; height:16px;
+    margin:2px 0 0;
+    border:1px solid rgba(255,255,255,0.45);
+    background:transparent;
+    cursor:pointer;
+    transition:background-color .15s ease, border-color .15s ease;
+  }
+  .newsletter-optin input:checked{
+    border-color:var(--ultramarine);
+    background:var(--ultramarine) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.2 6.3l2.6 2.6L9.8 3.4' fill='none' stroke='%23FCFCFA' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/11px 11px no-repeat;
+  }
+  .newsletter-optin input:focus-visible{outline:2px solid var(--stone); outline-offset:2px;}
+
   /* Trampa antispam de Brevo: tiene que existir en el formulario pero no verse. */
   .newsletter-hp{
     position:absolute;
@@ -472,30 +500,42 @@
     opacity:0;
     border:0; padding:0;
   }
-  /* Verificación de Google: sin clave configurada el hueco no ocupa nada. */
+  /* Verificacion invisible de Google: no ocupa sitio en la maquetacion. */
   .newsletter-captcha{
-    transform-origin:left top;
-    line-height:0;
+    position:absolute;
+    left:0; bottom:0;
+    width:0; height:0;
   }
-  .newsletter-captcha:empty{display:none;}
+  /* Se oculta la insignia flotante de Google; la atribucion obligatoria
+     aparece escrita en el texto legal de debajo del formulario. */
+  .grecaptcha-badge{visibility:hidden;}
+
   .newsletter-note{
-    margin-top:14px;
+    margin-top:16px;
     font-family:'Space Mono', monospace;
     font-size:12px;
     letter-spacing:0.04em;
+    line-height:1.6;
     color:rgba(255,255,255,0.55);
     min-height:16px;
   }
   .newsletter-note.is-ok{color:var(--canvas-c);}
   .newsletter-note.is-error{color:#E3A6A6;}
   .newsletter-legal{
-    margin-top:16px;
-    font-size:13px;
-    line-height:1.6;
-    color:rgba(255,255,255,0.42);
-    max-width:46ch;
+    margin-top:18px;
+    font-size:12px;
+    line-height:1.65;
+    color:rgba(255,255,255,0.4);
+    max-width:54ch;
   }
-  /* Destino invisible del envío: mantiene al visitante en la página. */
+  .newsletter-legal p{margin:0 0 8px;}
+  .newsletter-legal p:last-child{margin:0;}
+  .newsletter-legal a{
+    color:rgba(255,255,255,0.6);
+    border-bottom:1px solid rgba(255,255,255,0.22);
+  }
+  .newsletter-legal a:hover{color:var(--stone); border-color:var(--stone);}
+  /* Destino invisible del envio: mantiene al visitante en la pagina. */
   .newsletter-frame{
     position:absolute;
     left:-9999px;
@@ -507,7 +547,6 @@
   }
   @media (max-width:420px){
     .newsletter-form .btn{padding:15px 16px; letter-spacing:0.06em;}
-    .newsletter-captcha{transform:scale(0.84);}
   }
 
   /* ---------- LIGHTBOX ---------- */
@@ -1100,15 +1139,22 @@
               <input type="email" id="newsletterEmail" name="EMAIL" placeholder="tu@email.com" aria-label="Tu dirección de email" autocomplete="email" required>
               <button type="submit" class="btn primary" id="newsletterSubmit">Suscribirme</button>
             </div>
+            <label class="newsletter-optin">
+              <input type="checkbox" id="newsletterOptIn" name="OPT_IN" value="1">
+              <span>Acepto las condiciones y recibir tus newsletters.</span>
+            </label>
+            <!-- Verificación invisible de Google: no muestra nada salvo que detecte un envío sospechoso. -->
+            <div class="newsletter-captcha" id="newsletterCaptcha"></div>
             <!-- Trampa antispam de Brevo: no la borres y no la rellenes nunca. -->
             <input class="newsletter-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="locale" value="es">
-            <input type="hidden" name="html_type" value="simple">
-            <!-- Verificación de Google: se dibuja sola si hay clave en RECAPTCHA_SITE_KEY. -->
-            <div class="newsletter-captcha" id="newsletterCaptcha"></div>
           </form>
           <p class="newsletter-note" id="newsletterNote" role="status" aria-live="polite"></p>
-          <p class="newsletter-legal">Recibirás un correo para confirmar tu dirección. Puedes darte de baja en cualquier momento desde el enlace incluido en cada envío.</p>
+          <div class="newsletter-legal">
+            <p>Puedes cancelar tu suscripción cuando quieras mediante el enlace de nuestra newsletter.</p>
+            <p>Usamos Brevo como plataforma de marketing. Al enviar este formulario, aceptas que los datos personales que proporcionaste se transferirán a Brevo para su procesamiento, de acuerdo con <a href="https://www.brevo.com/es/legal/privacypolicy/" target="_blank" rel="nofollow noopener">la Política de privacidad de Brevo</a>.</p>
+            <p>Este sitio está protegido por reCAPTCHA; se aplican la <a href="https://policies.google.com/privacy" target="_blank" rel="nofollow noopener">Política de privacidad</a> y los <a href="https://policies.google.com/terms" target="_blank" rel="nofollow noopener">Términos del servicio</a> de Google.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1428,86 +1474,91 @@
 
   // ===========================================================
   //  NEWSLETTER -> BREVO
-  //  Solo hay que rellenar estos dos valores, copiandolos del
-  //  codigo que genera Brevo:
-  //
-  //   1) BREVO_FORM_ACTION  -> lo que hay entre comillas en action="..."
-  //                            (algo como https://xxxxx.brevo.com/...  o
-  //                             https://sibforms.com/serve/XXXXXXXX)
-  //   2) RECAPTCHA_SITE_KEY -> lo que hay entre comillas en data-sitekey="..."
-  //                            Si desactivas el captcha en Brevo, deja ''
-  //                            y la verificacion desaparece de la pagina.
-  //
-  //  No hace falta tocar nada mas.
+  //  Estos dos valores son los unicos que dependen de la cuenta de Brevo.
+  //  Si algun dia regeneras el formulario alli, actualiza solo estas dos
+  //  lineas: el resto del bloque no hay que tocarlo.
+  //    BREVO_FORM_ACTION  -> el action="..." del codigo que da Brevo
+  //    RECAPTCHA_SITE_KEY -> el data-sitekey="..." (verificacion invisible)
   // ===========================================================
-  const BREVO_FORM_ACTION  = 'PEGAR_AQUI_LA_URL_DE_ACTION';
-  const RECAPTCHA_SITE_KEY = 'PEGAR_AQUI_LA_SITE_KEY';
+  const BREVO_FORM_ACTION  = 'https://44e1e50b.sibforms.com/serve/MUIFACC7-vk8EjdUOYK4slRpPLeq_GNPd7w8uG0oBUZ0g32A3HYx6HCxDTBzk58FytAs85xXdKLjTaT_cwnd-ClaRfLcAI52Eh0Vei9JcXD5P0WPmRL9nMFAZCKkQotQsbemjqIul6BBly7015kP1N49OOhVQ0oCEzTyyQclvI56ay-GXBghgJ84pfbPSmrzBrrh1UURBO8eu6PHTQ==';
+  const RECAPTCHA_SITE_KEY = '6LftibAtAAAAAIBaZhpjUEkqai7UePxOSCVpyKD1';
 
   (function initNewsletter(){
     const form    = document.getElementById('newsletterForm');
     const input   = document.getElementById('newsletterEmail');
+    const optIn   = document.getElementById('newsletterOptIn');
     const button  = document.getElementById('newsletterSubmit');
     const note    = document.getElementById('newsletterNote');
     const captcha = document.getElementById('newsletterCaptcha');
     const frame   = document.getElementById('brevoFrame');
-    const isSet   = (v) => !!v && v.indexOf('PEGAR_AQUI') === -1;
     let captchaId = null;
     let sending   = false;
+    let timer     = null;
+
+    form.action = BREVO_FORM_ACTION;
 
     function say(msg, kind){
       note.textContent = msg;
       note.className = 'newsletter-note' + (kind ? ' is-' + kind : '');
     }
-
-    if(isSet(BREVO_FORM_ACTION)) form.action = BREVO_FORM_ACTION;
-
-    // La verificacion de Google solo se descarga si hay clave configurada:
-    // sin clave, la pagina no carga ningun script externo adicional.
-    if(isSet(RECAPTCHA_SITE_KEY)){
-      window.onNewsletterCaptcha = function(){
-        captchaId = grecaptcha.render(captcha, {
-          sitekey: RECAPTCHA_SITE_KEY,
-          theme: 'dark'
-        });
-      };
-      const s = document.createElement('script');
-      s.src = 'https://www.google.com/recaptcha/api.js?onload=onNewsletterCaptcha&render=explicit&hl=es';
-      s.async = true;
-      s.defer = true;
-      document.head.appendChild(s);
+    function idle(){
+      sending = false;
+      clearTimeout(timer);
+      button.disabled = false;
     }
+    // Envio real: el POST nativo viaja al iframe oculto, asi que el
+    // visitante no sale de la pagina en ningun momento.
+    function send(){ form.submit(); }
+
+    // Verificacion invisible de Google: se dibuja sin ocupar espacio y solo
+    // interrumpe al visitante si el envio le resulta sospechoso.
+    window.onNewsletterCaptcha = function(){
+      captchaId = grecaptcha.render(captcha, {
+        sitekey: RECAPTCHA_SITE_KEY,
+        size: 'invisible',
+        callback: send,
+        'expired-callback': function(){ if(captchaId !== null) grecaptcha.reset(captchaId); },
+        'error-callback': function(){ idle(); say('No hemos podido validar tu suscripción. Inténtalo de nuevo en un momento.', 'error'); }
+      });
+    };
+    var rc = document.createElement('script');
+    rc.src = 'https://www.google.com/recaptcha/api.js?onload=onNewsletterCaptcha&render=explicit&hl=es';
+    rc.async = true;
+    rc.defer = true;
+    document.head.appendChild(rc);
 
     form.addEventListener('submit', function(e){
-      if(!isSet(BREVO_FORM_ACTION)){
-        e.preventDefault();
-        say('El formulario todavía no está conectado a Brevo.', 'error');
-        return;
-      }
+      e.preventDefault();               // primero validamos y pedimos la verificacion
+      if(sending) return;
       if(!input.value || !input.checkValidity()){
-        e.preventDefault();
         say('Introduce una dirección de correo válida.', 'error');
         input.focus();
         return;
       }
-      if(captchaId !== null && !grecaptcha.getResponse(captchaId)){
-        e.preventDefault();
-        say('Marca la casilla de verificación para continuar.', 'error');
+      if(!optIn.checked){
+        say('Marca la casilla de aceptación para poder suscribirte.', 'error');
+        optIn.focus();
         return;
       }
-      // El envio nativo sigue su curso hacia el iframe oculto, asi que
-      // el visitante permanece en la pagina.
       sending = true;
+      button.disabled = true;
       say('Enviando…');
-      setTimeout(function(){ button.disabled = true; }, 0);
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        if(!sending) return;
+        idle();
+        say('El envío está tardando demasiado. Vuelve a intentarlo, por favor.', 'error');
+      }, 25000);
+      if(captchaId !== null){ grecaptcha.execute(captchaId); }  // al terminar llama a send()
+      else { send(); }
     });
 
     frame.addEventListener('load', function(){
-      if(!sending) return;   // primera carga del iframe vacio
-      sending = false;
-      button.disabled = false;
+      if(!sending) return;              // primera carga del iframe vacio
+      idle();
       form.reset();
       if(captchaId !== null) grecaptcha.reset(captchaId);
-      say('Gracias — revisa tu correo para confirmar la suscripción.', 'ok');
+      say('Gracias — tu suscripción se ha enviado. Revisa tu correo por si necesitas confirmarla.', 'ok');
     });
   })();
 </script>
