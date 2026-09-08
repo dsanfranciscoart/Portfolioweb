@@ -416,7 +416,7 @@
     .about-photo img{height:320px;}
   }
 
-  /* ---------- NEWSLETTER ---------- */
+  /* ---------- NEWSLETTER (conectada a Brevo) ---------- */
   #newsletter{background:var(--ink);}
   #newsletter .section-head{border-bottom-color:rgba(255,255,255,0.2);}
   #newsletter .section-head h2{color:var(--stone);}
@@ -427,19 +427,30 @@
     gap:48px;
     align-items:center;
   }
-  .newsletter-box p{
+  .newsletter-box > p{
     font-size:17px;
     color:rgba(255,255,255,0.78);
     max-width:52ch;
   }
   .newsletter-form{
+    position:relative;
     display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:22px;
+  }
+  .newsletter-field{
+    display:flex;
+    width:100%;
     gap:0;
     border-bottom:1px solid rgba(255,255,255,0.35);
     padding-bottom:4px;
+    transition:border-color .2s ease;
   }
-  .newsletter-form input{
+  .newsletter-field:focus-within{border-bottom-color:var(--stone);}
+  .newsletter-field input{
     flex:1;
+    min-width:0;
     background:transparent;
     border:none;
     padding:12px 4px;
@@ -447,11 +458,26 @@
     font-size:16px;
     color:var(--stone);
   }
-  .newsletter-form input::placeholder{color:rgba(255,255,255,0.4);}
-  .newsletter-form input:focus{outline:none;}
+  .newsletter-field input::placeholder{color:rgba(255,255,255,0.4);}
+  .newsletter-field input:focus{outline:none;}
   .newsletter-form .btn{border-color:var(--stone); color:var(--stone); flex:none;}
   .newsletter-form .btn.primary{background:var(--ultramarine); border-color:var(--ultramarine); color:var(--white);}
   .newsletter-form .btn.primary:hover{background:var(--ultramarine-deep); border-color:var(--ultramarine-deep);}
+  .newsletter-form .btn[disabled]{opacity:0.45; cursor:default;}
+  /* Trampa antispam de Brevo: tiene que existir en el formulario pero no verse. */
+  .newsletter-hp{
+    position:absolute;
+    left:-5000px;
+    width:1px; height:1px;
+    opacity:0;
+    border:0; padding:0;
+  }
+  /* Verificación de Google: sin clave configurada el hueco no ocupa nada. */
+  .newsletter-captcha{
+    transform-origin:left top;
+    line-height:0;
+  }
+  .newsletter-captcha:empty{display:none;}
   .newsletter-note{
     margin-top:14px;
     font-family:'Space Mono', monospace;
@@ -460,8 +486,28 @@
     color:rgba(255,255,255,0.55);
     min-height:16px;
   }
+  .newsletter-note.is-ok{color:var(--canvas-c);}
+  .newsletter-note.is-error{color:#E3A6A6;}
+  .newsletter-legal{
+    margin-top:16px;
+    font-size:13px;
+    line-height:1.6;
+    color:rgba(255,255,255,0.42);
+    max-width:46ch;
+  }
+  /* Destino invisible del envío: mantiene al visitante en la página. */
+  .newsletter-frame{
+    position:absolute;
+    left:-9999px;
+    width:0; height:0;
+    border:0;
+  }
   @media (max-width:800px){
     .newsletter-box{grid-template-columns:1fr;}
+  }
+  @media (max-width:420px){
+    .newsletter-form .btn{padding:15px 16px; letter-spacing:0.06em;}
+    .newsletter-captcha{transform:scale(0.84);}
   }
 
   /* ---------- LIGHTBOX ---------- */
@@ -551,7 +597,7 @@
     top:28px; right:32px;
     background:none; border:1px solid var(--white);
     color:var(--white);
-    width:40px; height:40px;
+    width:44px; height:44px;
     font-size:18px;
     cursor:pointer;
     z-index:2;
@@ -820,7 +866,6 @@
   </section>
 
   <!-- EXPOSICIONES -->
-<!-- EXPOSICIONES -->
 <section class="section" id="exposiciones">
   <div class="container">
     <div class="section-head">
@@ -838,7 +883,7 @@
         </div>
         <span class="label tl-type">Colectiva</span>
       </div>
-      
+
       <div class="tl-row">
         <span class="tl-year">2024</span>
         <div class="tl-main">
@@ -1050,11 +1095,20 @@
       <div class="newsletter-box">
         <p>Recibe actualizaciones mensuales desde el estudio: obra nueva, procesos y próximas exposiciones — sin spam, un email al mes.</p>
         <div>
-          <form id="newsletterForm" class="newsletter-form">
-            <input type="email" id="newsletterEmail" placeholder="tu@email.com" required>
-            <button type="submit" class="btn primary">Suscribirme</button>
+          <form id="newsletterForm" class="newsletter-form" method="POST" target="brevoFrame" novalidate>
+            <div class="newsletter-field">
+              <input type="email" id="newsletterEmail" name="EMAIL" placeholder="tu@email.com" aria-label="Tu dirección de email" autocomplete="email" required>
+              <button type="submit" class="btn primary" id="newsletterSubmit">Suscribirme</button>
+            </div>
+            <!-- Trampa antispam de Brevo: no la borres y no la rellenes nunca. -->
+            <input class="newsletter-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="locale" value="es">
+            <input type="hidden" name="html_type" value="simple">
+            <!-- Verificación de Google: se dibuja sola si hay clave en RECAPTCHA_SITE_KEY. -->
+            <div class="newsletter-captcha" id="newsletterCaptcha"></div>
           </form>
-          <p class="newsletter-note" id="newsletterNote"></p>
+          <p class="newsletter-note" id="newsletterNote" role="status" aria-live="polite"></p>
+          <p class="newsletter-legal">Recibirás un correo para confirmar tu dirección. Puedes darte de baja en cualquier momento desde el enlace incluido en cada envío.</p>
         </div>
       </div>
     </div>
@@ -1133,6 +1187,9 @@
     </div>
   </div>
 </div>
+
+<!-- Destino invisible del formulario de suscripción: el visitante no sale de la página al enviarlo. -->
+<iframe class="newsletter-frame" id="brevoFrame" name="brevoFrame" title="Envío de la suscripción" aria-hidden="true" tabindex="-1"></iframe>
 
 <script>
   // Lista unica de obras: cambia solo aqui para anadir, quitar o editar
@@ -1369,16 +1426,90 @@
     window.location.href = `mailto:dsanfrancisco.art@gmail.com?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(body)}`;
   });
 
-  // Newsletter -> este formulario todavia no esta conectado a ningun
-  // proveedor de email. Sustituye este bloque por la integracion real
-  // (Brevo, etc.) antes de publicar la web.
-  document.getElementById('newsletterForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const note = document.getElementById('newsletterNote');
-    const email = document.getElementById('newsletterEmail').value;
-    note.textContent = 'Gracias \u2014 en cuanto conectes este formulario a tu proveedor de email, ' + email + ' quedar\u00e1 suscrito de verdad.';
-    this.reset();
-  });
+  // ===========================================================
+  //  NEWSLETTER -> BREVO
+  //  Solo hay que rellenar estos dos valores, copiandolos del
+  //  codigo que genera Brevo:
+  //
+  //   1) BREVO_FORM_ACTION  -> lo que hay entre comillas en action="..."
+  //                            (algo como https://xxxxx.brevo.com/...  o
+  //                             https://sibforms.com/serve/XXXXXXXX)
+  //   2) RECAPTCHA_SITE_KEY -> lo que hay entre comillas en data-sitekey="..."
+  //                            Si desactivas el captcha en Brevo, deja ''
+  //                            y la verificacion desaparece de la pagina.
+  //
+  //  No hace falta tocar nada mas.
+  // ===========================================================
+  const BREVO_FORM_ACTION  = 'PEGAR_AQUI_LA_URL_DE_ACTION';
+  const RECAPTCHA_SITE_KEY = 'PEGAR_AQUI_LA_SITE_KEY';
+
+  (function initNewsletter(){
+    const form    = document.getElementById('newsletterForm');
+    const input   = document.getElementById('newsletterEmail');
+    const button  = document.getElementById('newsletterSubmit');
+    const note    = document.getElementById('newsletterNote');
+    const captcha = document.getElementById('newsletterCaptcha');
+    const frame   = document.getElementById('brevoFrame');
+    const isSet   = (v) => !!v && v.indexOf('PEGAR_AQUI') === -1;
+    let captchaId = null;
+    let sending   = false;
+
+    function say(msg, kind){
+      note.textContent = msg;
+      note.className = 'newsletter-note' + (kind ? ' is-' + kind : '');
+    }
+
+    if(isSet(BREVO_FORM_ACTION)) form.action = BREVO_FORM_ACTION;
+
+    // La verificacion de Google solo se descarga si hay clave configurada:
+    // sin clave, la pagina no carga ningun script externo adicional.
+    if(isSet(RECAPTCHA_SITE_KEY)){
+      window.onNewsletterCaptcha = function(){
+        captchaId = grecaptcha.render(captcha, {
+          sitekey: RECAPTCHA_SITE_KEY,
+          theme: 'dark'
+        });
+      };
+      const s = document.createElement('script');
+      s.src = 'https://www.google.com/recaptcha/api.js?onload=onNewsletterCaptcha&render=explicit&hl=es';
+      s.async = true;
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+
+    form.addEventListener('submit', function(e){
+      if(!isSet(BREVO_FORM_ACTION)){
+        e.preventDefault();
+        say('El formulario todavía no está conectado a Brevo.', 'error');
+        return;
+      }
+      if(!input.value || !input.checkValidity()){
+        e.preventDefault();
+        say('Introduce una dirección de correo válida.', 'error');
+        input.focus();
+        return;
+      }
+      if(captchaId !== null && !grecaptcha.getResponse(captchaId)){
+        e.preventDefault();
+        say('Marca la casilla de verificación para continuar.', 'error');
+        return;
+      }
+      // El envio nativo sigue su curso hacia el iframe oculto, asi que
+      // el visitante permanece en la pagina.
+      sending = true;
+      say('Enviando…');
+      setTimeout(function(){ button.disabled = true; }, 0);
+    });
+
+    frame.addEventListener('load', function(){
+      if(!sending) return;   // primera carga del iframe vacio
+      sending = false;
+      button.disabled = false;
+      form.reset();
+      if(captchaId !== null) grecaptcha.reset(captchaId);
+      say('Gracias — revisa tu correo para confirmar la suscripción.', 'ok');
+    });
+  })();
 </script>
 
 </body>

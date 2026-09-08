@@ -1,0 +1,17 @@
+# Finales de línea: en el repositorio siempre LF, para que los cambios
+# se vean en GitHub tal y como son y no como "el archivo entero cambiado".
+* text=auto eol=lf
+
+# Binarios: Git no debe tocarlos nunca.
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.gif   binary
+*.webp  binary
+*.svg   text eol=lf
+*.pdf   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
