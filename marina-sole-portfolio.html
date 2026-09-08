@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David San Francisco — Pintura</title>
+<meta name="description" content="David San Francisco, pintor. Obra disponible, exposiciones, dossier y contacto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --stone:#FFFFFF;
+    --stone-deep:#F5F5F3;
+    --ink:#1B1A17;
+    --ink-soft:#514E46;
+    --ultramarine:#26399E;
+    --ultramarine-deep:#1C2C7A;
+    --line:#CFC8B8;
+    --canvas-a:#DDE0EC;
+    --canvas-b:#B9A98F;
+    --canvas-c:#8C9BC4;
+    --white:#FCFCFA;
+    --radius:2px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    background:var(--stone);
+    color:var(--ink);
+    font-family:'Archivo', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  .label{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  .container.container-wide{
+    max-width:1600px;
+  }
+  @media (max-width:1024px){
+    .container.container-wide{max-width:1180px;}
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.05;
+    color:var(--ink);
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:transparent;
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:26px 32px;
+    width:100%;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .nav-links{
+    display:flex;
+    gap:36px;
+    list-style:none;
+  }
+  .nav-links a{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:4px;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:0; height:1px;
+    background:var(--ultramarine);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover::after,
+  .nav-links a:focus-visible::after{width:100%;}
+  .nav-links a:focus-visible{outline:2px solid var(--ultramarine); outline-offset:3px;}
+
+  @media (max-width:1000px) and (min-width:761px){
+    .brand{font-size:16px;}
+    .nav-links{gap:22px;}
+  }
+
+  .nav-toggle{
+    display:none;
+    background:none; border:none; cursor:pointer;
+    width:34px; height:24px;
+    position:relative;
+  }
+  .nav-toggle span{
+    position:absolute; left:0; right:0; height:1px;
+    background:var(--ink); transition:transform .25s ease, opacity .25s ease;
+  }
+  .nav-toggle span:nth-child(1){top:0;}
+  .nav-toggle span:nth-child(2){top:11px;}
+  .nav-toggle span:nth-child(3){top:22px;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(11px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-11px) rotate(-45deg);}
+
+  /* ---------- HERO — declaración editorial ---------- */
+  .hero{
+    min-height:100svh;
+    position:relative;
+    overflow:hidden;
+    background:var(--stone);
+  }
+  .hero-stage{position:absolute; inset:0; background:var(--stone);}
+  .hero-slide{
+    position:absolute;
+    top:88px; right:0; bottom:88px; left:0;
+    display:block;
+    opacity:0;
+    pointer-events:none;
+    cursor:pointer;
+  }
+  .hero-slide img{
+    width:100%; height:100%;
+    object-fit:contain;
+    display:block;
+  }
+  .hero-slide.active{opacity:1; pointer-events:auto;}
+  .hero-slide:focus-visible{outline:2px solid var(--ultramarine); outline-offset:-4px;}
+
+  @media (max-width:760px){
+    .hero-slide{top:64px; bottom:64px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-slide{transition:none;}
+  }
+
+  .hero-scroll-cue{
+    position:absolute;
+    z-index:3;
+    left:50%;
+    bottom:40px;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    text-shadow:0 1px 6px rgba(255,255,255,0.8);
+  }
+  .hero-scroll-cue .bar{
+    width:1px; height:34px;
+    background:rgba(27,26,23,0.2);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-scroll-cue .bar::after{
+    content:"";
+    position:absolute;
+    top:-100%; left:0; right:0; height:100%;
+    background:var(--ultramarine);
+    animation:scrollbar 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollbar{
+    0%{top:-100%;}
+    50%{top:100%;}
+    50.01%{top:-100%;}
+    100%{top:-100%;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-scroll-cue .bar::after{animation:none; top:0;}
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:120px 0;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:56px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:24px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:clamp(30px,3.6vw,44px);
+    font-family:'Archivo', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .section-head .label{white-space:nowrap;}
+
+  #obra{background:var(--stone-deep);}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:220px;
+    padding:8px 0 0;
+  }
+  .piece{
+    background:transparent;
+    cursor:pointer;
+    border:none;
+    text-align:left;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font:inherit;
+    color:inherit;
+    width:100%;
+    max-width:820px;
+  }
+  .piece:focus-visible{outline:2px solid var(--ultramarine); outline-offset:4px;}
+
+  /* obra vertical/cuadrada: la obra se centra por sí misma; la ficha se
+     ancla a su derecha, abajo, sin desplazar ese centrado */
+  .piece.orient-vertical{
+    position:relative;
+    display:block;
+    max-width:700px;
+  }
+  .piece.orient-vertical .canvas{width:100%;}
+  .piece.orient-vertical .piece-info{
+    position:absolute;
+    left:100%;
+    bottom:4px;
+    margin-left:40px;
+    width:260px;
+    padding:0;
+  }
+
+  /* obra horizontal: la obra queda arriba y la ficha debajo, con más tamaño */
+  .piece.orient-horizontal{
+    max-width:1320px;
+  }
+
+  .canvas{
+    position:relative;
+    overflow:hidden;
+    background:var(--white);
+  }
+  .canvas img{
+    display:block;
+    width:100%;
+    height:auto;
+    transition:transform .6s cubic-bezier(.25,.8,.25,1);
+  }
+  .piece:hover .canvas img, .piece:focus-visible .canvas img{transform:scale(1.03);}
+  .piece-info{
+    padding:36px 2px 0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .piece-title{
+    font-family:'Fraunces', serif;
+    font-size:21px;
+    font-weight:600;
+  }
+  .piece-meta{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    line-height:1.7;
+  }
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Space Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+  .status .sq{width:7px; height:7px;}
+  .status.disponible .sq{background:var(--ultramarine);}
+
+  .archive-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding-bottom:5px;
+    border-bottom:1px solid transparent;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .archive-link:hover, .archive-link:focus-visible{color:var(--ink); border-color:var(--ink);}
+  .archive-link-wrap{
+    text-align:center;
+    margin-top:120px;
+  }
+
+  @media (max-width:1080px){
+    .piece.orient-vertical{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:static;
+      max-width:820px;
+      gap:64px;
+    }
+    .piece.orient-vertical .canvas{width:100%;}
+    .piece.orient-vertical .piece-info{
+      position:static;
+      width:auto;
+      margin-left:0;
+      padding:0 2px;
+    }
+  }
+
+  @media (max-width:640px){
+    .gallery{gap:130px;}
+  }
+
+  /* ---------- SOBRE MÍ ---------- */
+  #sobre-mi{background:var(--stone-deep);}
+  .about-grid{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
+  }
+  .about-photo{
+    max-width:100%;
+  }
+  .about-photo img{
+    display:block;
+    height:475px;
+    width:auto;
+    max-width:100%;
+    object-fit:contain;
+    margin:0 auto;
+  }
+  .about-photo .label{color:var(--ink-soft);}
+  .about-copy{width:100%; max-width:100%;}
+  .about-copy p{
+    font-size:17px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+    text-align:justify;
+    hyphens:auto;
+  }
+  .about-copy p:first-of-type{text-indent:2em;}
+  .about-facts{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:28px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+  }
+  .about-facts li{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:16px;
+    font-size:15px;
+  }
+  .about-facts .label{margin:0;}
+  @media (max-width:800px){
+    .about-facts li{grid-template-columns:140px 1fr;}
+    .about-photo img{height:320px;}
+  }
+
+  /* ---------- NEWSLETTER ---------- */
+  #newsletter{background:var(--ink);}
+  #newsletter .section-head{border-bottom-color:rgba(255,255,255,0.2);}
+  #newsletter .section-head h2{color:var(--stone);}
+  #newsletter .label{color:rgba(255,255,255,0.55);}
+  .newsletter-box{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:48px;
+    align-items:center;
+  }
+  .newsletter-box p{
+    font-size:17px;
+    color:rgba(255,255,255,0.78);
+    max-width:52ch;
+  }
+  .newsletter-form{
+    display:flex;
+    gap:0;
+    border-bottom:1px solid rgba(255,255,255,0.35);
+    padding-bottom:4px;
+  }
+  .newsletter-form input{
+    flex:1;
+    background:transparent;
+    border:none;
+    padding:12px 4px;
+    font-family:'Archivo', sans-serif;
+    font-size:16px;
+    color:var(--stone);
+  }
+  .newsletter-form input::placeholder{color:rgba(255,255,255,0.4);}
+  .newsletter-form input:focus{outline:none;}
+  .newsletter-form .btn{border-color:var(--stone); color:var(--stone); flex:none;}
+  .newsletter-form .btn.primary{background:var(--ultramarine); border-color:var(--ultramarine); color:var(--white);}
+  .newsletter-form .btn.primary:hover{background:var(--ultramarine-deep); border-color:var(--ultramarine-deep);}
+  .newsletter-note{
+    margin-top:14px;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    color:rgba(255,255,255,0.55);
+    min-height:16px;
+  }
+  @media (max-width:800px){
+    .newsletter-box{grid-template-columns:1fr;}
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed; inset:0;
+    background:rgba(27,26,23,0.92);
+    z-index:200;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox-inner{
+    background:var(--stone);
+    max-width:1120px;
+    width:100%;
+    max-height:90vh;
+    overflow:auto;
+    display:flex;
+  }
+  /* vertical or square artwork: image left, ficha técnica right */
+  .lightbox-inner.orient-vertical{
+    flex-direction:row;
+    align-items:stretch;
+  }
+  .lightbox-inner.orient-vertical .lightbox-canvas{
+    flex:1 1 auto;
+    min-width:0;
+  }
+  .lightbox-inner.orient-vertical .lightbox-body{
+    flex:0 0 320px;
+  }
+  /* horizontal artwork: image on top, ficha técnica below */
+  .lightbox-inner.orient-horizontal{
+    flex-direction:column;
+  }
+  .lightbox-canvas{
+    position:relative;
+    background:var(--stone);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .lightbox-media{
+    position:relative;
+    display:inline-block;
+    line-height:0;
+  }
+  .lightbox-canvas img{
+    display:block;
+    max-width:100%;
+    max-height:70vh;
+    width:auto;
+    height:auto;
+    cursor:crosshair;
+  }
+  .lb-details{
+    line-height:1.6;
+    padding:18px 2px 4px;
+    font-family:'Archivo', sans-serif;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+  .lb-details:empty{display:none;}
+  .lb-details .label{display:block; margin-bottom:8px;}
+  .lb-details p{margin:0 0 10px;}
+  .lb-details p:last-child{margin-bottom:0;}
+  .lightbox-body{
+    padding:40px 36px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .lb-guarantee{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.02em;
+    color:var(--ultramarine);
+    line-height:1.6;
+    padding-top:4px;
+    border-top:1px solid var(--line);
+  }
+  .lightbox-close{
+    position:absolute;
+    top:28px; right:32px;
+    background:none; border:1px solid var(--white);
+    color:var(--white);
+    width:40px; height:40px;
+    font-size:18px;
+    cursor:pointer;
+    z-index:2;
+  }
+  .lightbox-close:hover{background:var(--white); color:var(--ink);}
+
+  /* lupa / magnifier */
+  .img-magnifier-glass{
+    position:absolute;
+    border:2px solid var(--stone);
+    border-radius:50%;
+    cursor:none;
+    width:170px;
+    height:170px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.35);
+    display:none;
+    pointer-events:none;
+    z-index:3;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .img-magnifier-glass{display:block;}
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:15px 26px;
+    border:1px solid var(--ink);
+    background:transparent;
+    color:var(--ink);
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+    width:fit-content;
+  }
+  .btn:hover, .btn:focus-visible{background:var(--ink); color:var(--stone);}
+  .btn.primary{background:var(--ultramarine); border-color:var(--ultramarine); color:var(--white);}
+  .btn.primary:hover{background:var(--ultramarine-deep); border-color:var(--ultramarine-deep);}
+
+  @media (max-width:760px){
+    .lightbox-inner.orient-vertical{flex-direction:column;}
+    .lightbox-inner.orient-vertical .lightbox-body{flex:none;}
+    .lightbox-canvas img{max-height:48vh;}
+  }
+
+  /* ---------- EXPOSICIONES ---------- */
+  .timeline{
+    display:flex;
+    flex-direction:column;
+  }
+  .tl-row{
+    display:grid;
+    grid-template-columns:110px 1fr auto;
+    gap:24px;
+    align-items:baseline;
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .tl-row:first-child{border-top:1px solid var(--line);}
+  .tl-year{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    font-weight:400;
+    letter-spacing:0.08em;
+    color:var(--ink);
+  }
+  .tl-main h3{
+    font-size:21px;
+    font-weight:500;
+    margin-bottom:4px;
+  }
+  .tl-venue{color:var(--ink-soft); font-size:15px;}
+  @media (max-width:700px){
+    .tl-row{grid-template-columns:1fr; gap:6px;}
+    .tl-type{order:3;}
+  }
+
+  /* ---------- DOSSIER ---------- */
+  #dossier{
+    background:var(--ink);
+    color:var(--stone);
+  }
+  #dossier .section-head{border-bottom-color:rgba(255,255,255,0.2);}
+  #dossier .section-head h2{color:var(--stone);}
+  #dossier .label{color:rgba(255,255,255,0.55);}
+  .dossier-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:64px;
+    align-items:center;
+  }
+  .dossier-copy p{
+    font-size:17px;
+    color:rgba(255,255,255,0.78);
+    max-width:52ch;
+    margin-bottom:28px;
+  }
+  .dossier-card{
+    border:1px solid rgba(255,255,255,0.25);
+    padding:36px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .dossier-card .label{color:rgba(255,255,255,0.55);}
+  .dossier-card ul{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    font-size:14px;
+    color:rgba(255,255,255,0.8);
+  }
+  .dossier-card li::before{content:"— "; color:var(--canvas-c);}
+  #dossier .btn{border-color:var(--stone); color:var(--stone);}
+  #dossier .btn:hover{background:var(--stone); color:var(--ink);}
+
+  @media (max-width:800px){
+    .dossier-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- CONTACTO ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1.1fr;
+    gap:64px;
+  }
+  .contact-info h3{font-size:24px; margin-bottom:18px; font-weight:500;}
+  .contact-list{list-style:none; display:flex; flex-direction:column; gap:18px; margin-top:28px;}
+  .contact-list a{font-size:16px; border-bottom:1px solid var(--line); display:inline-block; padding-bottom:2px;}
+  .contact-list a:hover{border-color:var(--ultramarine); color:var(--ultramarine);}
+
+  form{display:flex; flex-direction:column; gap:22px;}
+  .field{display:flex; flex-direction:column; gap:8px;}
+  .field label{font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft);}
+  .field input, .field textarea{
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line);
+    padding:10px 2px;
+    font-family:'Archivo', sans-serif;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus{
+    outline:none;
+    border-bottom-color:var(--ultramarine);
+  }
+  .field textarea{resize:vertical; min-height:110px;}
+  .form-note{font-size:13px; color:var(--ink-soft);}
+
+  @media (max-width:800px){
+    .contact-grid{grid-template-columns:1fr;}
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0;
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-row .label{color:var(--ink-soft);}
+  .socials{display:flex; gap:20px;}
+  .socials a{font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;}
+  .socials a:hover{color:var(--ultramarine);}
+
+  @media (max-width:760px){
+    .nav-links{
+      position:fixed;
+      top:78px; left:0; right:0;
+      background:var(--stone);
+      flex-direction:column;
+      gap:0;
+      border-bottom:1px solid var(--line);
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .3s ease;
+    }
+    .nav-links.open{max-height:320px;}
+    .nav-links a{
+      display:block;
+      padding:18px 32px;
+      border-bottom:1px solid var(--line);
+    }
+    .nav-toggle{display:block;}
+    .section{padding:80px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#inicio" class="brand">David San Francisco</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#obra">Obra</a></li>
+      <li><a href="archivo.html">Archivo</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#dossier">Dossier</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="marina-sole-portfolio-en.html" class="lang-switch">EN</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-stage" id="heroStage"></div>
+    <a href="#obra" class="hero-scroll-cue"><span class="bar"></span>Ver obra</a>
+  </section>
+
+  <!-- OBRA DISPONIBLE -->
+  <section class="section" id="obra">
+    <div class="container">
+      <div class="section-head">
+        <h2>Obra seleccionada</h2>
+        <span class="label" id="pieceCount"></span>
+      </div>
+    </div>
+    <div class="container container-wide" style="padding:0;">
+      <div class="gallery" id="gallery"></div>
+    </div>
+    <div class="container archive-link-wrap">
+      <a href="archivo.html" class="archive-link">Ver archivo <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <!-- SOBRE MÍ -->
+  <section class="section" id="sobre-mi">
+    <div class="container">
+      <div class="section-head">
+        <h2>Sobre mí</h2>
+        <span class="label">Biografía</span>
+      </div>
+      <div class="about-grid">
+        <div class="about-photo">
+          <img src="images/profile.jpg" alt="David San Francisco">
+        </div>
+        <div class="about-copy">
+          <p>Como artista e investigador, mi interés se centra en generar obras que sean capaces de producir un conocimiento adaptado a las experiencias del espectador. Son imágenes en las que evito otorgar un significado previo, donde cada persona propone su sentido a través de su experiencia y su memoria, y que evoluciona a la vez que lo hace el individuo.</p>
+          <p>Entiendo la pintura como un lenguaje y la obra como un participante activo en la comunicación. Esta premisa me ha llevado a desarrollar obras que actúen como nexo entre el público y el paisaje social del que participa haciendo su capacidad narrativa se actualice con cada espectador, mutando en base a sus secuencias de imágenes previas.</p>
+          <p>Propongo una experiencia artística pausada, en la que el grado de implicación del espectador determinará el sentido de la imagen, haciendo que la relación activa entre la obra y el individuo genere su significado.</p>
+          <ul class="about-facts">
+            <li><span class="label">Nacido en</span><span>Valladolid, España</span></li>
+            <li><span class="label">Reside y trabaja en</span><span>Madrid</span></li>
+            <li><span class="label">Formación</span><span>Doctor en Bellas Artes, Universidad Complutense de Madrid</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPOSICIONES -->
+<!-- EXPOSICIONES -->
+<section class="section" id="exposiciones">
+  <div class="container">
+    <div class="section-head">
+      <h2>Exposiciones</h2>
+      <span class="label">Trayectoria</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-row">
+        <span class="tl-year">2024</span>
+        <div class="tl-main">
+          <h3>Abstract Today</h3>
+          <span class="tl-venue">Espacio 15 Art Gallery · Madrid</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+      
+      <div class="tl-row">
+        <span class="tl-year">2024</span>
+        <div class="tl-main">
+          <h3>Los 15 de Espacio 15</h3>
+          <span class="tl-venue">Espacio 15 Art Gallery · Madrid</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2024</span>
+        <div class="tl-main">
+          <h3>Febrero</h3>
+          <span class="tl-venue">La Zona Gallery · Madrid</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2023–24</span>
+        <div class="tl-main">
+          <h3>La imagen Vaciada</h3>
+          <span class="tl-venue">Biblioteca Pública de Zamora · Zamora</span>
+        </div>
+        <span class="label tl-type">Individual</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2024</span>
+        <div class="tl-main">
+          <h3>Jóvenes pintores</h3>
+          <span class="tl-venue">La Salina · Salamanca</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2022</span>
+        <div class="tl-main">
+          <h3>Jóvenes pintores</h3>
+          <span class="tl-venue">La Salina · Salamanca</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2021–22</span>
+        <div class="tl-main">
+          <h3>I-T(f)</h3>
+          <span class="tl-venue">Hospital de Día Pío XII · Madrid</span>
+        </div>
+        <span class="label tl-type">Individual</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2020–21</span>
+        <div class="tl-main">
+          <h3>I-T(f)</h3>
+          <span class="tl-venue">Galería Luis Méndez · Salamanca</span>
+        </div>
+        <span class="label tl-type">Individual</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2019–20</span>
+        <div class="tl-main">
+          <h3>Premio Ibercaja de Pintura Joven</h3>
+          <span class="tl-venue">Sala de Exposiciones Patio de la Infanta · Zaragoza </span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2018</span>
+        <div class="tl-main">
+          <h3>Now, the Part of Intuition</h3>
+          <span class="tl-venue">La Trasera · Madrid</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2018</span>
+        <div class="tl-main">
+          <h3>Las 11 condiciones</h3>
+          <span class="tl-venue">La trasera · Madrid</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2017–18</span>
+        <div class="tl-main">
+          <h3>Bellas Artes</h3>
+          <span class="tl-venue">DomusArtium2002 · Salamanca</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2017</span>
+        <div class="tl-main">
+          <h3>The Wall</h3>
+          <span class="tl-venue">Escuela de Arte y Escuela Superior de Conservación y Restauración · Salamanca</span>
+        </div>
+        <span class="label tl-type">Individual</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2016–17</span>
+        <div class="tl-main">
+          <h3>Bellas Artes</h3>
+          <span class="tl-venue">Palacio de Quintanar · Segovia</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2016</span>
+        <div class="tl-main">
+          <h3>Punto y Aparte</h3>
+          <span class="tl-venue">La Salchichería · Salamanca</span>
+        </div>
+        <span class="label tl-type">Colectiva</span>
+      </div>
+
+    </div>
+
+    <div class="section-head" style="margin-top:100px; margin-bottom:0;">
+      <h2>Premios y concursos</h2>
+      <span class="label">Selección y reconocimiento</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-row">
+        <span class="tl-year">2024</span>
+        <div class="tl-main">
+          <h3>Programa de Arte Joven de Castilla y León</h3>
+          <span class="tl-venue">Finalista · Valladolid · 2024</span>
+        </div>
+        <span class="label tl-type">Finalista</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2023</span>
+        <div class="tl-main">
+          <h3>Pintores Jóvenes</h3>
+          <span class="tl-venue">Fundación Gaceta · Salamanca · noviembre 2023</span>
+        </div>
+        <span class="label tl-type">Seleccionado</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2023</span>
+        <div class="tl-main">
+          <h3>Programa de Arte Joven de Castilla y León</h3>
+          <span class="tl-venue">Valladolid · 2023</span>
+        </div>
+        <span class="label tl-type">Mención especial</span>
+      </div>
+
+      <div class="tl-row">
+        <span class="tl-year">2022</span>
+        <div class="tl-main">
+          <h3>Pintores Jóvenes</h3>
+          <span class="tl-venue">Fundación Gaceta · Salamanca · noviembre 2022</span>
+        </div>
+        <span class="label tl-type">Seleccionado</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- DOSSIER -->
+  <section class="section" id="dossier">
+    <div class="container">
+      <div class="section-head">
+        <h2>Dossier</h2>
+        <span class="label">PDF — 24 páginas</span>
+      </div>
+      <div class="dossier-grid">
+        <div class="dossier-copy">
+          <p>Un dossier completo con obra, trayectoria, textos crítica y condiciones de venta, pensado para galerías, comisarios y coleccionistas.</p>
+          <a class="btn primary" href="dossier-david-sanfrancisco.pdf" download>Descargar dossier (PDF)</a>
+        </div>
+        <div class="dossier-card">
+          <span class="label">Contenido</span>
+          <ul>
+            <li>Biografía y trayectoria</li>
+            <li>Obra disponible con fichas técnicas</li>
+            <li>Exposiciones individuales y colectivas</li>
+            <li>Textos de crítica y catálogos</li>
+            <li>Condiciones de venta y envío</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="section" id="newsletter">
+    <div class="container">
+      <div class="section-head">
+        <h2>Nuevas obras</h2>
+        <span class="label">Suscripción</span>
+      </div>
+      <div class="newsletter-box">
+        <p>Recibe actualizaciones mensuales desde el estudio: obra nueva, procesos y próximas exposiciones — sin spam, un email al mes.</p>
+        <div>
+          <form id="newsletterForm" class="newsletter-form">
+            <input type="email" id="newsletterEmail" placeholder="tu@email.com" required>
+            <button type="submit" class="btn primary">Suscribirme</button>
+          </form>
+          <p class="newsletter-note" id="newsletterNote"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section" id="contacto">
+    <div class="container">
+      <div class="section-head">
+        <h2>Contacto</h2>
+        <span class="label">Consultas y encargos</span>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Consultas sobre obra, encargos o representación</h3>
+          <p style="color:var(--ink-soft); max-width:40ch;">Respuesta en un plazo de 2–3 días laborables. Para visitas al estudio, escribir con antelación.</p>
+          <ul class="contact-list">
+            <li><span class="label">Email</span><br><a href="mailto:dsanfrancisco.art@gmail.com">dsanfrancisco.art@gmail.com</a></li>
+            <!-- <li><span class="label">Estudio</span><br><a href="#">Madrid, España — visitas con cita previa</a></li> -->
+            <li><span class="label">Instagram</span><br><a href="https://www.instagram.com/david.sanfrancisco.art/" target="_blank" rel="noopener">@davidsanfrancisco.arte</a></li>
+          </ul>
+        </div>
+        <form id="contactForm">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="asunto">Asunto</label>
+            <input type="text" id="asunto" name="asunto" placeholder="Ej. Consulta sobre 'Perímetro'">
+          </div>
+          <div class="field">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+          </div>
+          <button type="submit" class="btn primary">Enviar mensaje</button>
+          <p class="form-note">Al enviar, se abrirá tu gestor de correo con el mensaje ya redactado, listo para confirmar el envío.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <span class="label">© 2025 David San Francisco — Todos los derechos reservados</span>
+    <div class="socials">
+      <a href="https://www.instagram.com/david.sanfrancisco.art/" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:dsanfrancisco.art@gmail.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Detalle de la obra">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">✕</button>
+  <div class="lightbox-inner" id="lightboxInner">
+    <div class="lightbox-canvas" id="lightboxCanvas">
+      <div class="lightbox-media" id="lightboxMedia">
+        <img id="lbImg" src="" alt="">
+        <div class="lb-details" id="lbDetails"></div>
+      </div>
+    </div>
+    <div class="lightbox-body">
+      <span class="label">David San Francisco</span>
+      <h3 id="lbTitle" style="font-size:28px;"></h3>
+      <p class="piece-meta" id="lbMeta" style="font-size:12px;"></p>
+      <p class="lb-guarantee">Incluye certificado de autenticidad firmado · Envío asegurado a domicilio, embalaje incluido</p>
+      <p style="color:var(--ink-soft); font-size:15px;">Para más información sobre esta obra, condiciones de envío o solicitar imágenes en alta resolución, contacta directamente.</p>
+      <a class="btn" href="#contacto" id="lbContact">Consultar sobre esta obra</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Lista unica de obras: cambia solo aqui para anadir, quitar o editar
+  // una pieza -> la tarjeta de la galeria, el lightbox y la lupa se
+  // generan solos a partir de estos datos.
+  const WORKS = [
+    { title:'I Will Never be as tall as the moon',  meta:'Oleo, acrílico y resinas sintéticas sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',     details:'', img:'images/work-4-full.jpg', thumb:'images/work-4-thumb.jpg' },
+    { title:'What happens in front of your eyes and behind your back',    meta:'Oleo, acrílico, resinas sintéticas y pan de cobre sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',                                       details:'', img:'images/work-3-full.jpg', thumb:'images/work-3-thumb.jpg' },
+    { title:'Nothing stays still forever',     meta:'Oleo, acrílico y resinas sintéticas sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',       details:'', img:'images/work-8-full.jpg', thumb:'images/work-8-thumb.jpg' },
+    { title:'The cake is a lie',     meta:'Oleo, acrílico, resinas sintéticas y pan de plata sobre tabla forrada con lienzo de algodón \u00b7 120 \u00d7 75 cm \u00b7 2026',       details:'', img:'images/work-6-full.jpg', thumb:'images/work-6-thumb.jpg' },
+    { title:'Indeed, the cake was a lie',     meta:'Oleo, acrílico, ceras y resinas sintéticas sobre tabla forrada con lienzo de algodón \u00b7 120 \u00d7 75 cm \u00b7 2026',       details:'', img:'images/work-7-full.jpg', thumb:'images/work-7-thumb.jpg' },
+    { title:'In & Out',     meta:'Oleo, acrílico, resinas sintéticas y pan de cobre sobre tabla forrada con lienzo de algodón \u00b7 75 \u00d7 120 cm \u00b7 2026',       details:'', img:'images/work-10-full.jpg', thumb:'images/work-10-thumb.jpg' },
+    { title:'Sin Título No44',     meta:'Oleo, acrílico, resinas sintéticas, ceras, pan de plata y pan de cobre sobre lienzo \u00b7 75 \u00d7 120 cm \u00b7 2025',       details:'', img:'images/work-32-full.jpg', thumb:'images/work-32-thumb.jpg' },
+    { title:'Sin Título No37',     meta:'Oleo, acrílico, resinas sintéticas, pan de plata y pan de cobre sobre tabla \u00b7 150 \u00d7 240 cm \u00b7 2024',       details:'', img:'images/work-29-full.jpg', thumb:'images/work-29-thumb.jpg' },
+    { title:'Sin Título No39',     meta:'Oleo, acrílico, resinas sintéticas, ceras y pan de cobre sobre lienzo \u00b7 160 \u00d7 100 cm \u00b7 2025',       details:'', img:'images/work-30-full.jpg', thumb:'images/work-30-thumb.jpg' },
+    { title:'Sin Título No38',     meta:'Oleo, acrílico, resinas sintéticas, ceras, pan de plata y pan de cobre sobre lienzo \u00b7 160 \u00d7 100 cm \u00b7 2025',       details:'', img:'images/work-21-full.jpg', thumb:'images/work-21-thumb.jpg' },
+  ];
+
+  // ---- Hero: secuencia de las 3 obras, con fundido a blanco entre cada una.
+  // Los indices son posiciones dentro de WORKS, en el orden de las 3
+  // imagenes proporcionadas: I Will Never..., Nothing stays..., What happens...
+  const HERO_SEQUENCE = [0, 2, 1];
+  const HERO_INITIAL_DELAY = 1200;   // pantalla en blanco antes de la primera obra
+  const HERO_FADE_IN = 2500;         // duracion del fundido de aparicion
+  const HERO_HOLD = 5000;            // tiempo que la obra permanece visible
+  const HERO_FADE_OUT = 3000;        // duracion del fundido de vuelta a blanco
+
+  function initHero(){
+    const stage = document.getElementById('heroStage');
+    const slides = HERO_SEQUENCE.map(idx => {
+      const w = WORKS[idx];
+      const a = document.createElement('a');
+      a.href = '#obra';
+      a.className = 'hero-slide';
+      a.setAttribute('aria-label', 'Ver ficha de la obra "' + w.title + '"');
+      a.innerHTML = '<img src="' + w.img + '" alt="' + w.title + '">';
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('obra').scrollIntoView({ behavior:'smooth' });
+        setTimeout(() => openLightbox(idx), 450);
+      });
+      stage.appendChild(a);
+      return a;
+    });
+
+    let current = 0;
+    function showSlide(el){
+      el.style.transition = 'opacity ' + HERO_FADE_IN + 'ms ease';
+      el.classList.add('active');
+    }
+    function hideSlide(el){
+      el.style.transition = 'opacity ' + HERO_FADE_OUT + 'ms ease';
+      el.classList.remove('active');
+    }
+    function cycle(){
+      showSlide(slides[current]);
+      setTimeout(() => {
+        hideSlide(slides[current]);
+        setTimeout(() => {
+          current = (current + 1) % slides.length;
+          cycle();
+        }, HERO_FADE_OUT);
+      }, HERO_FADE_IN + HERO_HOLD);
+    }
+    setTimeout(cycle, HERO_INITIAL_DELAY);
+  }
+
+  // ---- Obra disponible: genera la tarjeta de cada pieza y el contador ----
+  const gallery = document.getElementById('gallery');
+  const pieceCount = document.getElementById('pieceCount');
+  pieceCount.textContent = WORKS.length + (WORKS.length === 1 ? ' pieza' : ' piezas');
+
+  WORKS.forEach((w, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'piece';
+    btn.innerHTML =
+      '<div class="canvas"><img src="' + w.thumb + '" alt="' + w.title + '" loading="lazy"></div>' +
+      '<div class="piece-info">' +
+        '<span class="piece-title">' + w.title + '</span>' +
+        '<span class="piece-meta">' + w.meta + '</span>' +
+        '<span class="status disponible"><span class="sq"></span>Consultar</span>' +
+      '</div>';
+    btn.addEventListener('click', () => openLightbox(i));
+    gallery.appendChild(btn);
+
+    // Orientacion: horizontal -> obra arriba, ficha debajo (mas ancho).
+    // Vertical/cuadrada -> obra a la izquierda, ficha a la derecha, abajo.
+    const thumbImg = btn.querySelector('.canvas img');
+    const applyPieceOrientation = () => {
+      const ratio = thumbImg.naturalWidth / thumbImg.naturalHeight;
+      btn.classList.toggle('orient-horizontal', ratio > 1.05);
+      btn.classList.toggle('orient-vertical', ratio <= 1.05);
+    };
+    if(thumbImg.complete && thumbImg.naturalWidth){ applyPieceOrientation(); }
+    else { thumbImg.addEventListener('load', applyPieceOrientation, { once:true }); }
+  });
+
+  // Nav toggle (mobile)
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', false);
+  }));
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxInner = document.getElementById('lightboxInner');
+  const lightboxCanvas = document.getElementById('lightboxCanvas');
+  const lightboxMedia = document.getElementById('lightboxMedia');
+  const lbImg = document.getElementById('lbImg');
+  const lbDetails = document.getElementById('lbDetails');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbMeta = document.getElementById('lbMeta');
+  const lbContact = document.getElementById('lbContact');
+
+  // Lupa / zoom: crea una lente circular que sigue el cursor mostrando
+  // la imagen ampliada, para poder inspeccionar el detalle del cuadro.
+  function initMagnifier(img, zoom){
+    const old = lightboxMedia.querySelector('.img-magnifier-glass');
+    if(old) old.remove();
+
+    const glass = document.createElement('div');
+    glass.className = 'img-magnifier-glass';
+    lightboxMedia.appendChild(glass);
+
+    function place(){
+      glass.style.backgroundImage = `url('${img.src}')`;
+      glass.style.backgroundRepeat = 'no-repeat';
+      glass.style.backgroundSize = (img.width * zoom) + 'px ' + (img.height * zoom) + 'px';
+    }
+    if(img.complete){ place(); } else { img.addEventListener('load', place, { once:true }); }
+
+    const w = glass.offsetWidth / 2 || 85;
+    const h = glass.offsetHeight / 2 || 85;
+
+    function getCursorPos(e){
+      const a = img.getBoundingClientRect();
+      const evt = e.touches ? e.touches[0] : e;
+      let x = evt.pageX - a.left - window.pageXOffset;
+      let y = evt.pageY - a.top - window.pageYOffset;
+      return { x, y };
+    }
+
+    function move(e){
+      e.preventDefault();
+      let { x, y } = getCursorPos(e);
+      if(x > img.width - (w / zoom)) x = img.width - (w / zoom);
+      if(x < w / zoom) x = w / zoom;
+      if(y > img.height - (h / zoom)) y = img.height - (h / zoom);
+      if(y < h / zoom) y = h / zoom;
+      glass.style.left = (x - w) + 'px';
+      glass.style.top = (y - h) + 'px';
+      glass.style.backgroundPosition = '-' + ((x * zoom) - w) + 'px -' + ((y * zoom) - h) + 'px';
+    }
+
+    img.addEventListener('mousemove', move);
+    img.addEventListener('touchmove', move);
+    img.addEventListener('mouseenter', () => glass.style.display = 'block');
+    img.addEventListener('mouseleave', () => glass.style.display = 'none');
+  }
+
+  function openLightbox(index){
+    const p = WORKS[index];
+    lbImg.src = p.img;
+    lbImg.alt = p.title;
+    lbTitle.textContent = p.title;
+    lbMeta.textContent = p.meta;
+    if(p.details){
+      lbDetails.innerHTML = '<span class="label">Detalles de la obra</span>' + p.details;
+    } else {
+      lbDetails.innerHTML = '';
+    }
+    lbContact.href = '#contacto';
+    lightbox.classList.add('open');
+    document.getElementById('lightboxClose').focus();
+
+    // Orientacion: vertical/cuadrada -> foto a la izquierda, ficha a la
+    // derecha. Horizontal -> foto arriba, ficha debajo.
+    const applyOrientation = () => {
+      const ratio = lbImg.naturalWidth / lbImg.naturalHeight;
+      lightboxInner.classList.toggle('orient-horizontal', ratio > 1.05);
+      lightboxInner.classList.toggle('orient-vertical', ratio <= 1.05);
+      initMagnifier(lbImg, 2.4);
+    };
+    if(lbImg.complete && lbImg.naturalWidth){ applyOrientation(); }
+    else { lbImg.addEventListener('load', applyOrientation, { once:true }); }
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+  }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+  lbContact.addEventListener('click', () => {
+    const asunto = document.getElementById('asunto');
+    if(asunto && lbTitle.textContent){
+      asunto.value = 'Consulta sobre "' + lbTitle.textContent + '"';
+    }
+    closeLightbox();
+  });
+
+  initHero();
+
+  // Sobre mí: el texto ocupa el mismo ancho que la fotografía. Como la
+  // foto es horizontal y su ancho depende de su proporción real, se
+  // mide una vez cargada (y en cada resize) y se aplica ese mismo
+  // ancho al bloque de texto.
+  const aboutPhotoImg = document.querySelector('.about-photo img');
+  const aboutCopy = document.querySelector('.about-copy');
+  if(aboutPhotoImg && aboutCopy){
+    const syncAboutWidth = () => {
+      if(aboutPhotoImg.offsetWidth) aboutCopy.style.maxWidth = aboutPhotoImg.offsetWidth + 'px';
+    };
+    if(aboutPhotoImg.complete && aboutPhotoImg.naturalWidth){ syncAboutWidth(); }
+    else { aboutPhotoImg.addEventListener('load', syncAboutWidth, { once:true }); }
+    window.addEventListener('resize', syncAboutWidth);
+  }
+
+  // Contact form -> mailto
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const asunto = document.getElementById('asunto').value || 'Consulta desde la web';
+    const mensaje = document.getElementById('mensaje').value;
+    const body = `Nombre: ${nombre}\nEmail: ${email}\n\n${mensaje}`;
+    window.location.href = `mailto:dsanfrancisco.art@gmail.com?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(body)}`;
+  });
+
+  // Newsletter -> este formulario todavia no esta conectado a ningun
+  // proveedor de email. Sustituye este bloque por la integracion real
+  // (Brevo, etc.) antes de publicar la web.
+  document.getElementById('newsletterForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const note = document.getElementById('newsletterNote');
+    const email = document.getElementById('newsletterEmail').value;
+    note.textContent = 'Gracias \u2014 en cuanto conectes este formulario a tu proveedor de email, ' + email + ' quedar\u00e1 suscrito de verdad.';
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
