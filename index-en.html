@@ -361,8 +361,18 @@
     }
   }
 
+  @media (max-width:760px){
+    /* Pieces keep some air at the sides instead of touching the screen edge */
+    .piece,
+    .piece.orient-vertical,
+    .piece.orient-horizontal{max-width:86%;}
+  }
+
   @media (max-width:640px){
     .gallery{gap:130px;}
+    .piece,
+    .piece.orient-vertical,
+    .piece.orient-horizontal{max-width:84%;}
   }
 
   /* ---------- SOBRE MÍ ---------- */
@@ -682,9 +692,22 @@
   .btn.primary:hover{background:var(--ultramarine-deep); border-color:var(--ultramarine-deep);}
 
   @media (max-width:760px){
+    /* On mobile the expanded card scrolls like a normal page: the whole
+       piece is visible and the finger can travel down it. */
+    .lightbox{
+      align-items:flex-start;
+      justify-content:center;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      padding:64px 14px 28px;
+    }
+    .lightbox-inner{max-height:none; overflow:visible;}
     .lightbox-inner.orient-vertical{flex-direction:column;}
     .lightbox-inner.orient-vertical .lightbox-body{flex:none;}
-    .lightbox-canvas img{max-height:48vh;}
+    .lightbox-canvas{overflow:visible;}
+    .lightbox-canvas img{max-height:none; width:100%; cursor:default;}
+    .lightbox-close{position:fixed; top:12px; right:12px;}
+    .lightbox-body{padding:26px 20px 30px;}
   }
 
   /* ---------- EXPOSICIONES ---------- */
@@ -1238,6 +1261,11 @@
   // Single source of truth for the works: edit only here to add, remove
   // or update a piece -> the gallery card, lightbox and magnifier are
   // generated automatically from this data.
+  // Obra representada por una galeria: anade el campo "galeria" a esa
+  // pieza y el boton de su ficha llevara a la web de la galeria en vez
+  // de al formulario de contacto. Ejemplo:
+  //   { title:'...', meta:'...', img:'...', thumb:'...',
+  //     galeria:{ nombre:'Espacio 15 Art Gallery', url:'https://ejemplo.com' } },
   const WORKS = [
     { title:'I Will Never be as tall as the moon',  meta:'Oleo, acrílico y resinas sintéticas sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',     details:'', img:'images/work-4-full.jpg', thumb:'images/work-4-thumb.jpg' },
     { title:'What happens in front of your eyes and behind your back',    meta:'Oleo, acrílico, resinas sintéticas y pan de cobre sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',                                       details:'', img:'images/work-3-full.jpg', thumb:'images/work-3-thumb.jpg' },
@@ -1356,6 +1384,10 @@
 
   // Magnifier: creates a circular lens that follows the cursor showing
   // the zoomed-in image, to inspect the painting's detail.
+  // The magnifier only makes sense with a mouse. On touch screens its
+  // touchmove handler was blocking finger scrolling.
+  const PUNTERO_FINO = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
   function initMagnifier(img, zoom){
     const old = lightboxMedia.querySelector('.img-magnifier-glass');
     if(old) old.remove();
@@ -1411,7 +1443,21 @@
     } else {
       lbDetails.innerHTML = '';
     }
-    lbContact.href = '#contacto';
+    // Card button: by default it goes to the contact form.
+    // If the piece is represented by a gallery, it goes to their website.
+    if(p.galeria && p.galeria.url){
+      lbContact.href = p.galeria.url;
+      lbContact.target = '_blank';
+      lbContact.rel = 'noopener';
+      lbContact.textContent = 'View at ' + (p.galeria.nombre || 'the gallery');
+      lbContact.dataset.galeria = '1';
+    } else {
+      lbContact.href = '#contacto';
+      lbContact.removeAttribute('target');
+      lbContact.removeAttribute('rel');
+      lbContact.textContent = 'Inquire about this piece';
+      delete lbContact.dataset.galeria;
+    }
     lightbox.classList.add('open');
     document.getElementById('lightboxClose').focus();
 
@@ -1421,7 +1467,7 @@
       const ratio = lbImg.naturalWidth / lbImg.naturalHeight;
       lightboxInner.classList.toggle('orient-horizontal', ratio > 1.05);
       lightboxInner.classList.toggle('orient-vertical', ratio <= 1.05);
-      initMagnifier(lbImg, 2.4);
+      if(PUNTERO_FINO) initMagnifier(lbImg, 2.4);
     };
     if(lbImg.complete && lbImg.naturalWidth){ applyOrientation(); }
     else { lbImg.addEventListener('load', applyOrientation, { once:true }); }
@@ -1433,12 +1479,27 @@
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
-  lbContact.addEventListener('click', () => {
+  lbContact.addEventListener('click', (e) => {
+    if(lbContact.dataset.galeria) { closeLightbox(); return; }   // deja abrir la web de la galeria
+    e.preventDefault();
     const asunto = document.getElementById('asunto');
     if(asunto && lbTitle.textContent){
       asunto.value = 'Inquiry about "' + lbTitle.textContent + '"';
     }
     closeLightbox();
+    // Manual navigation: with href="#contacto" the browser would not repeat
+    // the jump when the anchor was already in the URL, so sometimes it went nowhere.
+    const destino = document.getElementById('contacto');
+    if(!destino) return;
+    const irA = (suave) => window.scrollTo({
+      top: destino.getBoundingClientRect().top + window.pageYOffset,
+      behavior: suave ? 'smooth' : 'auto'
+    });
+    irA(true);
+    // Images still loading change the page height and can leave the jump
+    // half-done: it is re-asserted once the layout settles.
+    setTimeout(() => { if(Math.abs(destino.getBoundingClientRect().top) > 40) irA(false); }, 900);
+    setTimeout(() => { if(Math.abs(destino.getBoundingClientRect().top) > 40) irA(false); }, 1800);
   });
 
   initHero();

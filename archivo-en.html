@@ -373,9 +373,22 @@
   .btn:hover, .btn:focus-visible{background:var(--ink); color:var(--stone);}
 
   @media (max-width:760px){
+    /* On mobile the expanded card scrolls like a normal page: the whole
+       piece is visible and the finger can travel down it. */
+    .lightbox{
+      align-items:flex-start;
+      justify-content:center;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      padding:64px 14px 28px;
+    }
+    .lightbox-inner{max-height:none; overflow:visible;}
     .lightbox-inner.orient-vertical{flex-direction:column;}
     .lightbox-inner.orient-vertical .lightbox-body{flex:none;}
-    .lightbox-canvas img{max-height:48vh;}
+    .lightbox-canvas{overflow:visible;}
+    .lightbox-canvas img{max-height:none; width:100%; cursor:default;}
+    .lightbox-close{position:fixed; top:12px; right:12px;}
+    .lightbox-body{padding:26px 20px 30px;}
   }
 
   /* ---------- FOOTER ---------- */
@@ -501,6 +514,11 @@
   //    (if that year didn't exist yet, its block is created
   //    automatically in the right chronological place), with its card
   //    and its enlarged view already working.
+  // Obra representada por una galeria: anade el campo "galeria" a esa
+  // pieza y el boton de su ficha llevara a la web de la galeria en vez
+  // de al formulario de contacto. Ejemplo:
+  //   { title:'...', meta:'...', img:'...', thumb:'...',
+  //     galeria:{ nombre:'Espacio 15 Art Gallery', url:'https://ejemplo.com' } },
   const WORKS = [
     { title:'I Will Never be as tall as the moon',  meta:'Oleo, acrílico y resinas sintéticas sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',     details:'', img:'images/work-4-full.jpg', thumb:'images/work-4-thumb.jpg' },
     { title:'What happens in front of your eyes and behind your back',    meta:'Oleo, acrílico, resinas sintéticas y pan de cobre sobre tabla forrada con lienzo de algodón \u00b7 190 \u00d7 119 cm \u00b7 2026',                                       details:'', img:'images/work-3-full.jpg', thumb:'images/work-3-thumb.jpg' },
@@ -607,6 +625,10 @@
 
   // Magnifying glass / zoom: creates a circular lens that follows the
   // cursor showing the enlarged image, to inspect the painting's detail.
+  // The magnifier only makes sense with a mouse. On touch screens its
+  // touchmove handler was blocking finger scrolling.
+  const PUNTERO_FINO = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
   function initMagnifier(img, zoom){
     const old = lightboxMedia.querySelector('.img-magnifier-glass');
     if(old) old.remove();
@@ -662,6 +684,21 @@
     } else {
       lbDetails.innerHTML = '';
     }
+    // Card button: by default it goes to the contact form.
+    // If the piece is represented by a gallery, it goes to their website.
+    if(p.galeria && p.galeria.url){
+      lbContact.href = p.galeria.url;
+      lbContact.target = '_blank';
+      lbContact.rel = 'noopener';
+      lbContact.textContent = 'View at ' + (p.galeria.nombre || 'the gallery');
+      lbContact.dataset.galeria = '1';
+    } else {
+      lbContact.href = 'index.html#contacto';
+      lbContact.removeAttribute('target');
+      lbContact.removeAttribute('rel');
+      lbContact.textContent = 'Inquire about this piece';
+      delete lbContact.dataset.galeria;
+    }
     lightbox.classList.add('open');
     document.getElementById('lightboxClose').focus();
 
@@ -671,7 +708,7 @@
       const ratio = lbImg.naturalWidth / lbImg.naturalHeight;
       lightboxInner.classList.toggle('orient-horizontal', ratio > 1.05);
       lightboxInner.classList.toggle('orient-vertical', ratio <= 1.05);
-      initMagnifier(lbImg, 2.4);
+      if(PUNTERO_FINO) initMagnifier(lbImg, 2.4);
     };
     if(lbImg.complete && lbImg.naturalWidth){ applyOrientation(); }
     else { lbImg.addEventListener('load', applyOrientation, { once:true }); }
@@ -684,7 +721,7 @@
   lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
   lbContact.addEventListener('click', () => {
-    sessionStorage.setItem('consultaAsunto', 'Inquiry about "' + lbTitle.textContent + '"');
+    closeLightbox();   // el enlace navega solo: a la galeria o a la pagina de contacto
   });
 </script>
 
