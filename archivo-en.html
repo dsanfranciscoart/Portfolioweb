@@ -409,6 +409,16 @@
   .socials a:hover{color:var(--ultramarine);}
 
   @media (max-width:760px){
+    /* Pieces keep some air at the sides instead of touching the screen edge.
+       Being a grid, they need margin-inline to stay centred. */
+    .archive-grid .piece{max-width:86%; margin-inline:auto;}
+  }
+
+  @media (max-width:640px){
+    .archive-grid .piece{max-width:84%;}
+  }
+
+  @media (max-width:760px){
     .nav-links{
       position:fixed;
       top:78px; left:0; right:0;

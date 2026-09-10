@@ -409,6 +409,16 @@
   .socials a:hover{color:var(--ultramarine);}
 
   @media (max-width:760px){
+    /* Las obras dejan aire a los lados en lugar de tocar el borde de la pantalla.
+       Al ser una rejilla hace falta recentrarlas con margin-inline. */
+    .archive-grid .piece{max-width:86%; margin-inline:auto;}
+  }
+
+  @media (max-width:640px){
+    .archive-grid .piece{max-width:84%;}
+  }
+
+  @media (max-width:760px){
     .nav-links{
       position:fixed;
       top:78px; left:0; right:0;
